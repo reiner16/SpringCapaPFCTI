@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name= "Cuenta")
+@Table(name= "Inversion")
 @Setter
 @Getter
 public class Inversion {
