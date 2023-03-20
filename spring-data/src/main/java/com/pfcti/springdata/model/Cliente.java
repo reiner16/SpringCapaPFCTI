@@ -22,8 +22,10 @@ public class Cliente {
     @Column(columnDefinition  = "varchar(15)")
     private String cedula;
     private String telefono;
+    private String pais;
 
     @OneToMany(mappedBy = "cliente")
     private List<Direccion> direcciones;
+
 
 }

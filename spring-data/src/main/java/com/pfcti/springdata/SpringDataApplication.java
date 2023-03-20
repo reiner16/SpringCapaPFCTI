@@ -20,7 +20,7 @@ public class SpringDataApplication {
 	@Bean(initMethod = "start", destroyMethod = "stop")
 	public Server inMemoryH2DatabaseServer() throws SQLException {
 		return Server.createTcpServer(
-				"-tcp", "-tcpAllowOthers", "-tcpPort", "9095");
+				"-tcp", "-tcpAllowOthers", "-tcpPort", "9090");
 	}
 
 
