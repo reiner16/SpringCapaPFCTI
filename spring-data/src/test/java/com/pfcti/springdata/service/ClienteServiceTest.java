@@ -1,6 +1,8 @@
 package com.pfcti.springdata.service;
 
 import com.pfcti.springdata.dto.ClienteDto;
+import com.pfcti.springdata.dto.CuentaDto;
+import com.pfcti.springdata.dto.ProductosDto;
 import com.pfcti.springdata.model.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -20,6 +22,10 @@ class ClienteServiceTest {
 
     @Autowired
     private ClienteService clienteService;
+
+
+    @Autowired
+    private CuentaService cuentaService;
 
     @PersistenceContext
     private EntityManager   entityManager;
@@ -122,4 +128,20 @@ class ClienteServiceTest {
         assertEquals(1,resultadoCriteriosConDatosDTO.size());
     }
 
+    @Test
+    void buscarCuentasDinamicamentePorCriterio() {
+        CuentaDto cuentaDto = new CuentaDto();
+        //cuentaDto.setTipo("AHORROS");
+        cuentaDto.setEstado(true);
+        cuentaService.buscarCuentasDinamicamentePorCriterio(cuentaDto).forEach(
+                cuentaDtoResultado -> {System.out.println("Cuenta Resultado" + cuentaDtoResultado);});
+        assertEquals(1,1);
+    }
+
+    @Test
+    void obtenerTodosLosProductosDeUnCliente() {
+        ProductosDto productosDto = clienteService.obtenerTodosLosProductosDeUnCliente(1);
+        assertEquals(2, productosDto.getCuentaDto().size());
+
+    }
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TarjetaDto {
     private int id;
-    private String Numero;
-    private String Tipo;
-    private boolean estado;
+    private String numero;
+    private String tipo;
+    private Boolean estado;
 }

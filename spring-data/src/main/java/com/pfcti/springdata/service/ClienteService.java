@@ -1,11 +1,12 @@
 package com.pfcti.springdata.service;
 
 import com.pfcti.springdata.criteria.ClienteSpecification;
-import com.pfcti.springdata.dto.ClienteDto;
+import com.pfcti.springdata.dto.*;
 import com.pfcti.springdata.model.Cliente;
-import com.pfcti.springdata.repository.ClienteRepository;
-import com.pfcti.springdata.repository.CuentaRepository;
-import com.pfcti.springdata.repository.DirecionRepository;
+import com.pfcti.springdata.model.Cuenta;
+import com.pfcti.springdata.model.Inversion;
+import com.pfcti.springdata.model.Tarjeta;
+import com.pfcti.springdata.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -20,9 +21,13 @@ import java.util.stream.Collectors;
 @Transactional
 @AllArgsConstructor
 public class ClienteService {
-        ClienteRepository   clienteRepository;
+        private ClienteRepository   clienteRepository;
         private DirecionRepository direccionRepository;
         private CuentaRepository cuentaRepository;
+        private InversionRepository inversionRepository;
+        private TarjetaRepository tarjetaRepository;
+
+
         private ClienteSpecification clienteSpecification;
 
         private ClienteDto fromClienteToDto(Cliente cliente){
@@ -32,6 +37,8 @@ public class ClienteService {
                 BeanUtils.copyProperties(cliente, clienteDto);
                 return clienteDto;
         }
+
+
 
         public void insertaCliente(ClienteDto clienteDto) {
                 Cliente cliente = new Cliente();
@@ -122,5 +129,55 @@ public class ClienteService {
                 return clienteRepository.findAll(clienteSpecification.buildFilter(clienteDtoFilter))
                         .stream().map(this::fromClienteToDto).collect(Collectors.toList());
         }
+
+
+
+        public ProductosDto obtenerTodosLosProductosDeUnCliente(int id) {
+                ProductosDto productosDto = new ProductosDto();
+                List<CuentaDto> cuentaDtos = new ArrayList<>();
+
+                cuentaRepository.findByCliente_IdAAndEstadoIsTrue(id).forEach(cuenta -> {
+                        CuentaDto cuentaDto;
+                        cuentaDto = fromCuentaToDto(cuenta);
+                        cuentaDtos.add(cuentaDto);
+                });
+                productosDto.setCuentaDto(cuentaDtos);
+
+                List<TarjetaDto> tarjetaDtos = new ArrayList<>();
+                tarjetaRepository.findByCliente_IdAAndEstadoIsTrue(id).forEach(tarjeta -> {
+                        TarjetaDto tarjetaDto;
+                        tarjetaDto = fromTarjetaToDto(tarjeta);
+                        tarjetaDtos.add(tarjetaDto);
+                });
+                productosDto.setTarjetaDtos(tarjetaDtos);
+
+                List<InversionDto> inversionDtos = new ArrayList<>();
+                inversionRepository.findByCliente_IdAAndEstadoIsTrue(id).forEach(inversion -> {
+                        InversionDto inversionDto;
+                        inversionDto = fromInversionToDto(inversion);
+                        inversionDtos.add(inversionDto);
+                });
+                productosDto.setInversionDtos(inversionDtos);
+                return productosDto;
+        }
+        private CuentaDto fromCuentaToDto(Cuenta cuenta) {
+                CuentaDto cuentaDto = new CuentaDto();
+                BeanUtils.copyProperties(cuenta, cuentaDto);
+                return cuentaDto;
+        }
+
+        private TarjetaDto fromTarjetaToDto(Tarjeta tarjeta) {
+                TarjetaDto tarjetaDto = new TarjetaDto();
+                BeanUtils.copyProperties(tarjeta, tarjetaDto);
+                return tarjetaDto;
+        }
+
+        private InversionDto fromInversionToDto(Inversion inversion) {
+                InversionDto inversionDto = new InversionDto();
+                BeanUtils.copyProperties(inversion, inversionDto);
+                return inversionDto;
+        }
+
+
 
 }
