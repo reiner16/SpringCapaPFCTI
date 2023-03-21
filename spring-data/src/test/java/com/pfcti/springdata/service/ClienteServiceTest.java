@@ -88,4 +88,38 @@ class ClienteServiceTest {
             System.out.println("CLIENTE NO EXISTE: " + e.getMessage());
         }
     }
+
+
+    @Test
+    void obtenerClientesPorCodigoISOPaisYCuentasActivas() {
+        List<ClienteDto> clientesDto = clienteService.obtenerClientesPorCodigoISOPaisYCuentasActivas("CR");
+        clientesDto.forEach(clienteDto -> {System.out.println("Cuentas Activas" + clienteDto);});
+        assertEquals(1, clientesDto.size());
+    }
+
+    @Test
+    void buscarClientesPorApellido() {
+        List<Cliente> cliente =  clienteService.buscarClientesPorApellido("PEREZ");
+        assertFalse(cliente.isEmpty());
+        assertEquals("PEREZ", cliente.get(0).getApellidos());
+    }
+
+    @Test
+    void buscarClientesPorApellidoNativo() {
+
+    }
+
+    @Test
+    void buscarClientesDinamicamentePorCriterio() {
+
+        ClienteDto clienteDto = new ClienteDto();
+        clienteDto.setNombre("ROBERTO");
+        List<ClienteDto> resultadoCriteriosConDatosDTO =
+                    clienteService.buscarClientesDinamicamentePorCriterio(clienteDto);
+
+        resultadoCriteriosConDatosDTO.forEach(clienteDtoResultado -> {System.out.println("ClienteDto es:"+ clienteDtoResultado);});
+
+        assertEquals(1,resultadoCriteriosConDatosDTO.size());
+    }
+
 }

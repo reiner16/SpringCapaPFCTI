@@ -5,14 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name= "Inversion")
+@Table(name= "inversion")
 @Setter
 @Getter
 public class Inversion {
     @Id
+    @GeneratedValue(strategy =
+            GenerationType.IDENTITY)
     private int id;
-    private String Numero;
-    private String Tipo;
+    private String numero;
+    private String tipo;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id" , referencedColumnName = "id")

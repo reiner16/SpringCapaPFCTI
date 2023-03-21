@@ -5,15 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name= "Tarjeta")
+@Table(name= "tarjeta")
 @Setter
 @Getter
 public class Tarjeta {
 
     @Id
+    @GeneratedValue(strategy =
+            GenerationType.IDENTITY)
     private int id;
-    private String Numero;
-    private String Tipo;
+    private String numero;
+    private String tipo;
+    private Boolean estado; //activo-inactivo
 
     @ManyToOne
     @JoinColumn(name = "cliente_id" , referencedColumnName = "id")

@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name= "Direccion")
+@Table(name= "direccion")
 @Setter
 @Getter
 public class Direccion {
 
     @Id
+    @GeneratedValue(strategy =
+            GenerationType.IDENTITY)
     private int id;
     private String direccion;
     private String nomenclatura;

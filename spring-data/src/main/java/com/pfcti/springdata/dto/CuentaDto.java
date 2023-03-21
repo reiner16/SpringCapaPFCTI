@@ -1,7 +1,11 @@
 package com.pfcti.springdata.dto;
 
+import lombok.Data;
+
+@Data
 public class CuentaDto {
     private int id;
-    private String Numero;
-    private String Tipo;
+    private String numero;
+    private String tipo;
+    private String estado;
 }
