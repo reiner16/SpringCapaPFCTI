@@ -19,6 +19,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> , Jpa
             nativeQuery = true)
     List<Tuple>  buscarPorApellidosNativo(String apellidos);
 
+    List<Cliente> findByCedula(String textoBusqueda);
+
+    List<Cliente> findByNombreContainingIgnoreCaseOrApellidosContainingIgnoreCase(String textoBusqueda, String textoBusqueda1);
+
     //Esta parte no me compilo
     //@Query(value = "select c from Cliente c inner join tarjeta t where c.id = t.id and c.paisNacimiento <> 'CRC' ")
     //List<Cliente> buscarClientesExtranjerosConTarjetasInactivas();

@@ -11,7 +11,7 @@ public interface InversionRepository extends JpaRepository<Inversion, Integer>, 
 
     void deleteAllByCliente_Id(int clienteId);
 
-    List<Inversion> findByCliente_IdAAndEstadoIsTrue(int clienteId);
+    List<Inversion> findByCliente_IdAndEstadoIsTrue(int clienteId);
 
 
 }

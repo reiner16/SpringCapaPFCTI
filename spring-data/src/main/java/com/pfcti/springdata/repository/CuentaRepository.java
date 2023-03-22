@@ -15,6 +15,6 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> , JpaSp
 
     void deleteAllByCliente_Id(int clienteId);
 
-    List<Cuenta> findByCliente_IdAAndEstadoIsTrue(int clienteId);
+    List<Cuenta> findByCliente_IdAndEstadoIsTrue(int clienteId);
 
 }

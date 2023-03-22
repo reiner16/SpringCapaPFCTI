@@ -136,7 +136,7 @@ public class ClienteService {
                 ProductosDto productosDto = new ProductosDto();
                 List<CuentaDto> cuentaDtos = new ArrayList<>();
 
-                cuentaRepository.findByCliente_IdAAndEstadoIsTrue(id).forEach(cuenta -> {
+                cuentaRepository.findByCliente_IdAndEstadoIsTrue(id).forEach(cuenta -> {
                         CuentaDto cuentaDto;
                         cuentaDto = fromCuentaToDto(cuenta);
                         cuentaDtos.add(cuentaDto);
@@ -144,7 +144,7 @@ public class ClienteService {
                 productosDto.setCuentaDto(cuentaDtos);
 
                 List<TarjetaDto> tarjetaDtos = new ArrayList<>();
-                tarjetaRepository.findByCliente_IdAAndEstadoIsTrue(id).forEach(tarjeta -> {
+                tarjetaRepository.findByCliente_IdAndEstadoIsTrue(id).forEach(tarjeta -> {
                         TarjetaDto tarjetaDto;
                         tarjetaDto = fromTarjetaToDto(tarjeta);
                         tarjetaDtos.add(tarjetaDto);
@@ -152,7 +152,7 @@ public class ClienteService {
                 productosDto.setTarjetaDtos(tarjetaDtos);
 
                 List<InversionDto> inversionDtos = new ArrayList<>();
-                inversionRepository.findByCliente_IdAAndEstadoIsTrue(id).forEach(inversion -> {
+                inversionRepository.findByCliente_IdAndEstadoIsTrue(id).forEach(inversion -> {
                         InversionDto inversionDto;
                         inversionDto = fromInversionToDto(inversion);
                         inversionDtos.add(inversionDto);
