@@ -23,6 +23,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> , Jpa
 
     List<Cliente> findByNombreContainingIgnoreCaseOrApellidosContainingIgnoreCase(String textoBusqueda, String textoBusqueda1);
 
+
+    Cliente findClienteById(int id);
+
     //Esta parte no me compilo
     //@Query(value = "select c from Cliente c inner join tarjeta t where c.id = t.id and c.paisNacimiento <> 'CRC' ")
     //List<Cliente> buscarClientesExtranjerosConTarjetasInactivas();

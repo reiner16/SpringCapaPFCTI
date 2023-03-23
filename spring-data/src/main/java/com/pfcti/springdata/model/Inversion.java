@@ -15,6 +15,7 @@ public class Inversion {
     private int id;
     private String numero;
     private String tipo;
+    private Boolean estado; //activo-inactivo
 
     @ManyToOne
     @JoinColumn(name = "cliente_id" , referencedColumnName = "id")

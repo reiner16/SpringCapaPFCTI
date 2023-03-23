@@ -1,40 +1,29 @@
-package com.pfcti.springdata.springbeans;
+package com.pfcti.springdata.springbeans.business.impl;
 
 import com.pfcti.springdata.dto.ClienteDto;
 import com.pfcti.springdata.model.Cliente;
 import com.pfcti.springdata.repository.ClienteRepository;
+import com.pfcti.springdata.springbeans.business.BuscadorClientes;
 import com.pfcti.springdata.springbeans.dto.ClienteQueryDto;
 import com.pfcti.springdata.springbeans.dto.ClienteQueryType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AdministradorClientes {
+@Service("baseDeDatos")
+public class BuscadorClientesBdd  implements BuscadorClientes {
 
-    //En este caso se hace la inyección por el constructor
-    private  ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-    private ClienteQueryType defaultClienteQueryType;
+    @Override
+    public List<ClienteDto> obtenerListaClientes(ClienteQueryDto clienteQueryDto) {
 
-    public AdministradorClientes(ClienteRepository clienteRepository, ClienteQueryType defaultClienteQueryType) {
-        System.out.println("Inicializando constructor AdministradorClientes " + this);
-        this.clienteRepository = clienteRepository;
-       this.defaultClienteQueryType = defaultClienteQueryType;
-    }
-
-    public AdministradorClientes( ClienteQueryType defaultClienteQueryType) {
-
-        this.defaultClienteQueryType = defaultClienteQueryType;
-    }
-
-    public List<ClienteDto> obtenerListaClientesPorCriterio(ClienteQueryDto clienteQueryDto) {
         List<Cliente> clientes = null;
-
-        if (clienteQueryDto.getTipoBusqueda() == null) {
-            clienteQueryDto.setTipoBusqueda(defaultClienteQueryType);
-        }
 
         if (ClienteQueryType.CEDULA.equals(clienteQueryDto.getTipoBusqueda())) {
             clientes = this.clienteRepository.findByCedula(clienteQueryDto.getTextoBusqueda());
@@ -49,9 +38,7 @@ public class AdministradorClientes {
             clienteDto.setTelefono(cliente.getTelefono());
             return clienteDto;
         }).collect(Collectors.toList())).orElse(new ArrayList<>());
-    }
 
-    public void setClienteRepository(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
+
     }
 }
