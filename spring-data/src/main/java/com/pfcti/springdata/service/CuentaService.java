@@ -43,7 +43,7 @@ public class CuentaService {
     public void insertaCuenta(CuentaDto cuentaDto) {
         Cuenta cuenta = new Cuenta();
 
-        ClienteDto clienteDto =  clienteService.obtenerCliente(1);
+
         Cliente cliente = clienteRepository.findClienteById(1);
 
         cuenta.setCliente(cliente);
