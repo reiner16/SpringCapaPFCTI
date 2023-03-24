@@ -41,6 +41,7 @@ public class CuentaService {
     private CuentaDto fromCuentaToDto(Cuenta cuenta){
         CuentaDto cuentaDto = new CuentaDto();
         BeanUtils.copyProperties(cuenta, cuentaDto);
+        cuentaDto.setCliente_id(cuenta.getCliente().getId());
         return cuentaDto;
     }
 
@@ -84,6 +85,13 @@ public class CuentaService {
         return cuentasPorCliente;
     }
 
+
+    public CuentaDto desactivarCuentaPorId(CuentaDto cuentaDto){
+        Cuenta cuenta = cuentaRepository.findById(cuentaDto.getId()).orElseThrow(() -> {throw new RuntimeException("cuenta de Cliente No Existe");});
+        cuenta.setEstado(false);
+        cuentaRepository.save(cuenta);
+        return fromCuentaToDto(cuenta);
+    }
 
 
 

@@ -8,5 +8,6 @@ public class CuentaDto {
     private String numero;
     private String tipo;
     private Boolean estado;
-    private int idCliente;
+    private int cliente_id;
+
 }

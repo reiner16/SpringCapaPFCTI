@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 //@ControllerAdvice(basePackages = "com.demo.springwebservices.api")
 @ControllerAdvice(basePackages = "com.pfcti.springdata.springwebservices.api")
+
 @Slf4j
 public class MetadataRestExceptionsHandler {
 

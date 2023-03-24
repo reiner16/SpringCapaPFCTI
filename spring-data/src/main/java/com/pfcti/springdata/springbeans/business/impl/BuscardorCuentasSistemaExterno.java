@@ -12,7 +12,7 @@ public class BuscardorCuentasSistemaExterno implements BuscadorCuentas {
     @Override
     public List<CuentaDto> buscarCuentasPorCliente(int idCliente) {
         CuentaDto cuentaDto = new CuentaDto();
-        cuentaDto.setIdCliente(1);
+        cuentaDto.setCliente_id (1);
         cuentaDto.setId(1);
         cuentaDto.setEstado(true);
         cuentaDto.setNumero("123123213231212");
