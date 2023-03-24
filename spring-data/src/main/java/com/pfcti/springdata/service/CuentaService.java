@@ -65,6 +65,13 @@ public class CuentaService {
 
     }
 
+    public void creacionDeCuenta(CuentaDto cuentaDto){
+        Cuenta cuenta = new Cuenta();
+        cuenta = fromDtoToCuenta(cuentaDto);
+        cuentaRepository.save(cuenta);
+        log.info("Cuenta: {} ", cuenta);
+    }
+
     public List<CuentaDto> buscarCuentasPorCliente(int idCliente) {
         List<CuentaDto> cuentasPorCliente = new ArrayList<>();
         cuentaRepository.findByCliente_IdAndEstadoIsTrue(idCliente)
