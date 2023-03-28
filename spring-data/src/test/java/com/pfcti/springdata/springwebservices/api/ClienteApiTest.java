@@ -24,7 +24,7 @@ class ClienteApiTest {
     private static final String BASERESTURL = "/v1/api/cliente";
     private WebTestClient webTestClient = null;
 
-
+    //
     @BeforeEach
     void setUp(){
         BASEURL = BASEURL.concat(":").concat(port.toString()).concat(BASERESTURL);
