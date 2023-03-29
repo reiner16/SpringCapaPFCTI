@@ -18,9 +18,10 @@ class CuentaServiceTest {
     @Test
     void insertaCuenta() {
         CuentaDto cuentaDto = new CuentaDto();
-        cuentaDto.setEstado(Boolean.FALSE);
+        cuentaDto.setEstado(Boolean.TRUE);
         cuentaDto.setNumero("89898");
         cuentaDto.setTipo("AHORRO");
         cuentaService.insertaCuenta(cuentaDto);
+        //cuentaService.insertaCuenta(cuentaDto);
     }
 }

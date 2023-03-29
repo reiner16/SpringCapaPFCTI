@@ -71,6 +71,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test:3.2.3.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+	implementation 'org.springframework.boot:spring-boot-starter-artemis'
+	implementation 'org.apache.activemq:artemis-jakarta-server'
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
 
 }
 

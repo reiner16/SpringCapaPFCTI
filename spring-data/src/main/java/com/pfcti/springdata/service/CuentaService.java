@@ -7,6 +7,9 @@ import com.pfcti.springdata.model.Cliente;
 import com.pfcti.springdata.model.Cuenta;
 import com.pfcti.springdata.repository.ClienteRepository;
 import com.pfcti.springdata.repository.CuentaRepository;
+import com.pfcti.springdata.springjms.dto.NoticationDto;
+import com.pfcti.springdata.springjms.pubsub.publishers.NotificationPubSubSender;
+import com.pfcti.springdata.springjms.senders.NoticationSender;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -20,6 +23,10 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.List;
 
+
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -28,9 +35,14 @@ public class CuentaService {
     private CuentaRepository cuentaRepository;
     private CuentaSpecification cuentaSpecification;
     private ClienteRepository clienteRepository;
+    private NoticationSender noticationSender;
+
+    private NotificationPubSubSender notificationPubSubSender;
 
     @Autowired
-    private ClienteService clienteService;
+    private ClienteService  clienteService;
+
+    // private ClienteService clienteService;
 
     private Cuenta fromDtoToCuenta(CuentaDto cuentaDto) {
         Cuenta cuenta = new Cuenta();
@@ -63,15 +75,32 @@ public class CuentaService {
         cuenta.setEstado(cuentaDto.getEstado());
 
         cuentaRepository.save(cuenta);
-
+        this.enviarNotificacion(cuentaDto);
     }
+
 
     public void creacionDeCuenta(CuentaDto cuentaDto){
         Cuenta cuenta = new Cuenta();
         cuenta = fromDtoToCuenta(cuentaDto);
         cuentaRepository.save(cuenta);
         log.info("Cuenta: {} ", cuenta);
+        //Notificacion
+        //noticationSender.sendSms();
+        this.enviarNotificacion(cuentaDto);
     }
+
+    private void enviarNotificacion(CuentaDto cuentaDto){
+        NoticationDto noticationDto = new NoticationDto();
+        ClienteDto clienteDto = clienteService.obtenerCliente(cuentaDto.getCliente_id ());
+        noticationDto.setPhoneNumber(clienteDto.getTelefono());
+        noticationDto.setMailBody("Estimado " + clienteDto.getNombre() + "tu cuenta fue creada");
+        noticationSender.sendSms(noticationDto);
+
+        Message<CuentaDto> message = MessageBuilder.withPayload(cuentaDto).build();
+        notificationPubSubSender.sendNotification(message);
+
+    }
+
 
     public List<CuentaDto> buscarCuentasPorCliente(int idCliente) {
         List<CuentaDto> cuentasPorCliente = new ArrayList<>();
